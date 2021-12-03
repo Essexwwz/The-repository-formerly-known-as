@@ -43,9 +43,9 @@ public final class HuskySortBenchmark {
     public void runBenchmarks() {
         // CONSIDER refactoring the following to conform to the others
         sortStrings(config.getIntegerStream("benchmarkstringsorters", "sizes"), 500000000);
-        config.getIntegerStream("benchmarktuplesorters", "sizes").forEach(x -> sortTuples(x, 250000000));
-        config.getIntegerStream("benchmarkdatesorters", "sizes").forEach(x -> sortLocalDateTimes(x, 50000000));
-        config.getIntegerStream("benchmarknumbersorters", "sizes").forEach(x -> sortNumerics(x, 250000000));
+        //config.getIntegerStream("benchmarktuplesorters", "sizes").forEach(x -> sortTuples(x, 250000000));
+        //config.getIntegerStream("benchmarkdatesorters", "sizes").forEach(x -> sortLocalDateTimes(x, 50000000));
+        //config.getIntegerStream("benchmarknumbersorters", "sizes").forEach(x -> sortNumerics(x, 250000000));
     }
 
     /**
@@ -62,16 +62,22 @@ public final class HuskySortBenchmark {
 
     private void doSortStrings(final int n, final int m) {
         // NOTE: Leipzig English words benchmarks (according to command-line arguments)
+        /*
         if (isConfigBenchmarkStringSorter("leipzigenglish"))
             doLeipzigBenchmarkEnglish(n, m);
 
+         */
+
         // NOTE: Leipzig Chinese words benchmarks (according to command-line arguments)
-        if (isConfigBenchmarkStringSorter("leipzigchinese"))
-            doLeipzigBenchmark("zho-simp-tw_web_2014_10K-sentences.txt", n, m, UNICODE_CODER);
+        //if (isConfigBenchmarkStringSorter("leipzigchinese"))
+            doLeipzigBenchmark("shuffledChinese.txt", n, m, UNICODE_CODER);
 
         // NOTE: common words benchmark
+        /*
         if (isConfigBenchmarkStringSorter("english"))
             benchmarkStringSorters(COMMON_WORDS_CORPUS, HuskySortBenchmarkHelper.getWords(COMMON_WORDS_CORPUS, HuskySortBenchmark::lineAsList), n, m, englishCoder);
+
+         */
     }
 
     /**
@@ -319,7 +325,7 @@ public final class HuskySortBenchmark {
 
     final static LazyLogger logger = new LazyLogger(HuskySortBenchmark.class);
 
-    final static Pattern REGEX_LEIPZIG = Pattern.compile("[~\\t]*\\t(([\\s\\p{Punct}\\uFF0C]*\\p{L}+)*)");
+    final static Pattern REGEX_LEIPZIG = Pattern.compile("(([\\s\\p{Punct}\\uFF0C]*\\p{L}+)*)");
 
     public static final Function<Random, Byte> byteFunction = r -> {
         byte[] bytes = new byte[1];
@@ -645,10 +651,6 @@ public final class HuskySortBenchmark {
     static private void logBenchmarkRun(final double time) {
         logger.info(TimeLogger.formatTime(time) + " ms");
     }
-
-    private static final Consumer<String[]> DO_NOTHING = (xs2) -> {
-        // XXX do nothing.
-    };
 
     private static final double LgE = lg(Math.E);
 
