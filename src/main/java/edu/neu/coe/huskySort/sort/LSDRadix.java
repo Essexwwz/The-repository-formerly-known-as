@@ -56,7 +56,7 @@ public class LSDRadix {
         }
         return str.charAt(k);
     }
-    public static void radixpy(String[] arr) {
+    public static String[] radixpy(String[] arr) {
         int length = arr.length;
         String[] eachline = new String[length];
 
@@ -78,6 +78,7 @@ public class LSDRadix {
             }
 
         radixSort(eachline);
+            return eachline;
     }
 
     private static String pinyin(char c) {

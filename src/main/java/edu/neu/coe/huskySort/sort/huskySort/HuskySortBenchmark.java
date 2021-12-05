@@ -62,22 +62,26 @@ public final class HuskySortBenchmark {
 
     private void doSortStrings(final int n, final int m) {
         // NOTE: Leipzig English words benchmarks (according to command-line arguments)
-        /*
-        if (isConfigBenchmarkStringSorter("leipzigenglish"))
-            doLeipzigBenchmarkEnglish(n, m);
 
-         */
+        //if (isConfigBenchmarkStringSorter("leipzigenglish"))
+           // doLeipzigBenchmarkEnglish(n, m);
+
+
+
+
 
         // NOTE: Leipzig Chinese words benchmarks (according to command-line arguments)
         //if (isConfigBenchmarkStringSorter("leipzigchinese"))
-            doLeipzigBenchmark("shuffledChinese.txt", n, m, UNICODE_CODER);
+            //doLeipzigBenchmark("javaio-appendfile.txt", n, m, HuskyCoderFactory.utf8Coder);
 
         // NOTE: common words benchmark
-        /*
+
         if (isConfigBenchmarkStringSorter("english"))
             benchmarkStringSorters(COMMON_WORDS_CORPUS, HuskySortBenchmarkHelper.getWords(COMMON_WORDS_CORPUS, HuskySortBenchmark::lineAsList), n, m, englishCoder);
 
-         */
+
+
+
     }
 
     /**
@@ -525,7 +529,8 @@ public final class HuskySortBenchmark {
 
     // CONSIDER why don't we just go with "10K", etc. for x??
     private void doLeipzigBenchmarkEnglish(final int n, final int m) {
-        final String resource = "eng-uk_web_2002_" + (n < 50000 ? "10K" : n < 200000 ? "100K" : "1M") + "-sentences.txt";
+        //final String resource = "eng-uk_web_2002_" + (n < 50000 ? "10K" : n < 200000 ? "100K" : "1M") + "-sentences.txt";
+        final String resource = "javaio-appendfile.txt";
         final HuskyCoder<String> huskyCoder = HuskySortHelper.getSequenceCoderByName(getConfigHuskyCoder());
         doLeipzigBenchmark(resource, n, m, huskyCoder);
     }
@@ -646,7 +651,7 @@ public final class HuskySortBenchmark {
             new TimeLogger("Normalized time per run (n^2): ", (time, n) -> time / meanInversions(n) / 6 * 1e6)
     };
 
-    static final String COMMON_WORDS_CORPUS = "3000-common-words.txt";
+    static final String COMMON_WORDS_CORPUS = "javaio-appendfile.txt";
 
     static private void logBenchmarkRun(final double time) {
         logger.info(TimeLogger.formatTime(time) + " ms");
